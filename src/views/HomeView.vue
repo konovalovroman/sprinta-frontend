@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HomeHeader />
+    <div class="homepage__body flex flex-col items-center justify-center">
+      <div class="logo mt-12">
+        <img width="100" src="../assets/logo.svg" alt="sprinta" />
+      </div>
+      <h1 class="
+          text-4xl
+          mt-12
+          font-medium"
+      >
+          Welcome to Sprinta
+      </h1>
+    </div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+<script setup>
+import HomeHeader from '@/components/HomeHeader.vue';
+import { useStore } from 'vuex';
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
-};
+const store = useStore();
+const router = useRouter();
+
+onMounted(() => {
+    const { isAuthenticated } = store.state.auth;
+
+    if (isAuthenticated) {
+        router.push('/workspace');
+    }
+});
 </script>
