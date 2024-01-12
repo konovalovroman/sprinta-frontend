@@ -1,11 +1,11 @@
 import { BASE_API_URL } from '@/config';
+import { getAuthorizationHeader } from '@/helpers';
 
 export default {
     async getCurrentUser() {
-        const accessToken = localStorage.getItem('accessToken');
         const res = await fetch(`${BASE_API_URL}/users/me`, {
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
+                ...getAuthorizationHeader(),
             },
         });
 

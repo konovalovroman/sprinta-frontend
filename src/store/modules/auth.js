@@ -1,5 +1,6 @@
 import authAPI from '@/api/auth';
 import usersAPI from '@/api/users';
+import { LocalStorageKeys } from '@/helpers';
 
 const state = {
     isAuthenticated: false,
@@ -26,7 +27,7 @@ const actions = {
         }
 
         const { accessToken } = signInResponse.data;
-        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
 
         const currentUserResponse = await usersAPI.getCurrentUser();
 
@@ -44,7 +45,7 @@ const actions = {
         }
 
         const { accessToken } = signUpResponse.data;
-        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
 
         const currentUserResponse = await usersAPI.getCurrentUser();
 
@@ -72,11 +73,11 @@ const actions = {
         }
 
         const { accessToken } = refreshTokensResponse.data;
-        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
         return true;
     },
     async restoreAuth({ commit, dispatch }) {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem(LocalStorageKeys.ACCESS_TOKEN);
         
         if (!accessToken) {
             return dispatch('clearAuthentication');
@@ -103,7 +104,7 @@ const actions = {
         return;
     },
     clearAuthentication({ commit }) {
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem(LocalStorageKeys.ACCESS_TOKEN);
         commit('SET_IS_AUTHENTICATED', false);
         commit('SET_USER', {});
         return;

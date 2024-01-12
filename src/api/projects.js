@@ -1,12 +1,11 @@
 import { BASE_API_URL } from '@/config';
+import { HttpMethods, getAuthorizationHeader } from '@/helpers';
 
 export default {
     async getAllUserProjects() {
-        const accessToken = localStorage.getItem('accessToken');
-
         const res = await fetch(`${BASE_API_URL}/projects`, {
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
+                ...getAuthorizationHeader(),
             },
         });
 
@@ -18,14 +17,12 @@ export default {
         };
     },
     async createProject(payload) {
-        const accessToken = localStorage.getItem('accessToken');
-
         const res = await fetch(`${BASE_API_URL}/projects`, {
-            method: 'POST',
+            method: HttpMethods.POST,
             body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
+                ...getAuthorizationHeader(),
             },
         });
 
