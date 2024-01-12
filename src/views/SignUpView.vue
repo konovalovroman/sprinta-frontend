@@ -139,8 +139,7 @@ const onSubmit = handleSubmit(async (values) => {
     const { username, email, password, confirmPassword } = values;
 
     if (password !== confirmPassword) {
-        setErrors({ confirmPassword: 'Password not matching' });
-        return;
+        return setErrors({ confirmPassword: 'Password not matching' });
     }
 
     const payload = { username, email, password };
@@ -149,10 +148,9 @@ const onSubmit = handleSubmit(async (values) => {
     const { isAuthenticated } = store.state.auth;
 
     if (!isAuthenticated) {
-        setErrors({ signUp: 'Sign up error. Perhaps, email or username are taken' });
-        return;
+        return setErrors({ signUp: 'Sign up error. Perhaps, email or username are taken' });
     }
 
-    router.push('/workspace');
+    return router.push('/workspace');
 });
 </script>

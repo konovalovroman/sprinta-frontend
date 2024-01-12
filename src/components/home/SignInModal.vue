@@ -21,7 +21,7 @@
         v-model="password"
     />
     <div class="h-5">
-        <p v-if="errors.signIn" class="text-red-500 font-extralight text-xs">{{ errors.signIn.message }}</p>
+        <p v-if="errors.signIn" class="text-red-500 font-extralight text-xs">{{ errors.signIn }}</p>
     </div>
 
     <button
@@ -55,37 +55,44 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-
-const email = ref('');
-const password = ref('');
-const errors = ref({});
+import { useForm, useField } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import * as zod from 'zod';
 
 const store = useStore();
 const router = useRouter();
 
 const emit = defineEmits(['close']);
 
-const onSubmit = async () => {
+const validationSchema = toTypedSchema(
+    zod.object({
+        email: zod.string().email('Enter a vaild email'),
+        password: zod.string(),
+    }),
+);
+
+const { handleSubmit, errors, setErrors } = useForm({ validationSchema });
+
+const { value: email } = useField('email');
+const { value: password } = useField('password');
+
+const onSubmit = handleSubmit(async (values) => {
     const payload = {
-        email: email.value,
-        password: password.value,
+        email: values.email,
+        password: values.password,
     };
 
     await store.dispatch('signIn', payload);
     const { isAuthenticated } = store.state.auth;
 
     if (!isAuthenticated) {
-        errors.value.signIn = {
-            message: 'Invalid username or password',
-        };
-        return;
+        return setErrors({ signIn: 'Invalid username or password' });
     }
 
-    router.push('/workspace');
-};
+    return router.push('/workspace');
+});
 
 const onClose = () => {
     emit('close');
