@@ -1,4 +1,5 @@
 import projectsAPI from '@/api/projects';
+import { HttpStatus } from '@/helpers';
 
 const state = {
     userProjects: [],
@@ -16,7 +17,7 @@ const actions = {
     async getAllUserProjects({ commit }) {
         const userProjectsResponse = await projectsAPI.getAllUserProjects();
     
-        if (userProjectsResponse.status === 200) {
+        if (userProjectsResponse.status === HttpStatus.OK) {
             return commit('SET_USER_PROJECTS', userProjectsResponse.data);
         }
         
@@ -25,7 +26,7 @@ const actions = {
     async createProject({ commit, state }, payload) {
         const createProjectResponse = await projectsAPI.createProject(payload);
 
-        if (createProjectResponse.status === 201) {
+        if (createProjectResponse.status === HttpStatus.CREATED) {
             commit('SET_USER_PROJECTS', [...state.userProjects, createProjectResponse.data]);
         }
 

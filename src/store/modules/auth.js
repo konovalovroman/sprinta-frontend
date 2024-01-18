@@ -1,6 +1,6 @@
 import authAPI from '@/api/auth';
 import usersAPI from '@/api/users';
-import { LocalStorageKeys } from '@/helpers';
+import { HttpStatus, clearAccessToken, getAccessToken, setAccessToken } from '@/helpers';
 
 const state = {
     isAuthenticated: false,
@@ -22,16 +22,16 @@ const actions = {
     async signIn({ dispatch }, payload) {
         const signInResponse = await authAPI.signIn(payload);
 
-        if (signInResponse.status !== 200) {
+        if (signInResponse.status !== HttpStatus.OK) {
             return dispatch('clearAuthentication');
         }
 
         const { accessToken } = signInResponse.data;
-        localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
+        setAccessToken(accessToken);
 
         const currentUserResponse = await usersAPI.getCurrentUser();
 
-        if (currentUserResponse.status !== 200) {
+        if (currentUserResponse.status !== HttpStatus.OK) {
             return dispatch('clearAuthentication');
         }
 
@@ -40,16 +40,16 @@ const actions = {
     async signUp({ dispatch }, payload) {
         const signUpResponse = await authAPI.signUp(payload);
 
-        if (signUpResponse.status !== 200) {
+        if (signUpResponse.status !== HttpStatus.OK) {
             return dispatch('clearAuthentication');
         }
 
         const { accessToken } = signUpResponse.data;
-        localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
+        
 
         const currentUserResponse = await usersAPI.getCurrentUser();
 
-        if (currentUserResponse.status !== 200) {
+        if (currentUserResponse.status !== HttpStatus.OK) {
             return dispatch('clearAuthentication');
         }
 
@@ -58,7 +58,7 @@ const actions = {
     async logout({ dispatch }) {
         const logoutResponse = await authAPI.logout();
 
-        if (logoutResponse.status === 204) {
+        if (logoutResponse.status === HttpStatus.NO_CONTENT) {
             dispatch('clearAuthentication');
         }
 
@@ -67,17 +67,17 @@ const actions = {
     async refreshTokens({ dispatch }) {
         const refreshTokensResponse = await authAPI.refreshTokens();
 
-        if (refreshTokensResponse.status !== 200) {
+        if (refreshTokensResponse.status !== HttpStatus.OK) {
             dispatch('clearAuthentication');
             return false;
         }
 
         const { accessToken } = refreshTokensResponse.data;
-        localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
+        setAccessToken(accessToken);
         return true;
     },
-    async restoreAuth({ commit, dispatch }) {
-        const accessToken = localStorage.getItem(LocalStorageKeys.ACCESS_TOKEN);
+    async restoreAuth({ dispatch }) {
+        const accessToken = getAccessToken();
         
         if (!accessToken) {
             return dispatch('clearAuthentication');
@@ -85,7 +85,7 @@ const actions = {
 
         const currentUserResponse = await usersAPI.getCurrentUser();
 
-        if (currentUserResponse.status === 200) {
+        if (currentUserResponse.status === HttpStatus.OK) {
             return dispatch('setAuthentication', currentUserResponse.data);
         }
 
@@ -104,7 +104,7 @@ const actions = {
         return;
     },
     clearAuthentication({ commit }) {
-        localStorage.removeItem(LocalStorageKeys.ACCESS_TOKEN);
+        clearAccessToken();
         commit('SET_IS_AUTHENTICATED', false);
         commit('SET_USER', {});
         return;

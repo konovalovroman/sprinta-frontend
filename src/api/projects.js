@@ -1,11 +1,11 @@
 import { BASE_API_URL } from '@/config';
-import { HttpMethods, getAuthorizationHeader } from '@/helpers';
+import { getAccessToken } from '@/helpers';
 
 export default {
     async getAllUserProjects() {
         const res = await fetch(`${BASE_API_URL}/projects`, {
             headers: {
-                ...getAuthorizationHeader(),
+                'Authorization': `Bearer ${getAccessToken()}`,
             },
         });
 
@@ -18,11 +18,11 @@ export default {
     },
     async createProject(payload) {
         const res = await fetch(`${BASE_API_URL}/projects`, {
-            method: HttpMethods.POST,
+            method: 'POST',
             body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json',
-                ...getAuthorizationHeader(),
+                'Authorization': `Bearer ${getAccessToken()}`,
             },
         });
 
