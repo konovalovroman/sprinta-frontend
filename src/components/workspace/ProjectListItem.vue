@@ -23,6 +23,4 @@ import { defineProps } from 'vue';
 const props = defineProps({
     project: Object,
 });
-
-// style="width: 1000px; height: 150px;">
 </script>
