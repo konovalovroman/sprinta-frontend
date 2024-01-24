@@ -1,11 +1,12 @@
 <template>
     <div class="projects-list mt-20">
-        <div class="flex flex-wrap justify-start gap-2">
-            <ProjectListItem v-for="project in projects" :key="project.id" :project="project"/>
-        </div>
+      <div class="flex flex-wrap justify-start gap-2">
+        <router-link v-for="project in projects" :key="project.id" :to="{ name: 'project', params: { id: project.id } }">
+          <ProjectListItem :project="project" />
+        </router-link>
+      </div>
     </div>
 </template>
-  
 
 <script setup>
 import { defineProps } from 'vue';

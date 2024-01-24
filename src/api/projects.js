@@ -33,4 +33,18 @@ export default {
             data,
         };
     },
+    async getProjectById(id) {
+        const res = await fetch(`${BASE_API_URL}/projects/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${getAccessToken()}`,
+            },
+        });
+
+        const data = await res.json();
+        
+        return {
+            status: res.status,
+            data,
+        };
+    },
 };

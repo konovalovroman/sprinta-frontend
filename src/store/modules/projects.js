@@ -3,6 +3,7 @@ import { HttpStatus } from '@/helpers';
 
 const state = {
     userProjects: [],
+    selectedProject: {},
 };
 
 const getters = {};
@@ -10,6 +11,9 @@ const getters = {};
 const mutations = {
     SET_USER_PROJECTS(state, value) {
         state.userProjects = value;
+    },
+    SET_SELECTED_PROJECT(state, value) {
+        state.selectedProject = value;
     },
 };
 
@@ -31,6 +35,18 @@ const actions = {
         }
 
         return;
+    },
+    async getOneProject({ commit }, id) {
+        const projectResponse = await projectsAPI.getProjectById(id);
+
+        if (projectResponse.status === HttpStatus.OK) {
+            commit('SET_SELECTED_PROJECT', projectResponse.data);
+        }
+
+        return;
+    },
+    clearSelectedProject({ commit }) {
+        commit('SET_SELECTED_PROJECT', {});
     },
 };
 

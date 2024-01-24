@@ -18,6 +18,12 @@ const routes = [
         component: () => import('@/views/WorkspaceView'),
     },
     {
+        path: '/projects/:id',
+        name: 'project',
+        component: () => import('@/views/ProjectView'),
+        props: true,
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'not-found',
         component: () => import('@/views/NotFoundView'),
