@@ -11,7 +11,8 @@
         <div v-if="sprints.length === 0"
             class="
                 no-sprints-label
-                font-thin
+                font-light
+                text-xs
                 flex
                 justify-center
                 mt-2

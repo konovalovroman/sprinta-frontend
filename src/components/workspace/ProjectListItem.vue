@@ -1,17 +1,19 @@
 <template>
     <div class="
         project-list-item
-        bg-gray-100 shadow-md
+        bg-zinc-100
+        shadow-md
         rounded-sm
         m-2
         p-4
-        border-b-8
-        border-gray-300
+        border-b-4
+        border-zinc-100
         hover:cursor-pointer
-        hover:border-fuchsia-800" 
-        style="width: 350px; height: 150px;">
-        <h2 class="text-lg font-semibold">{{ project.name }}</h2>
-        <p>Created by {{ project.owner.username }}</p>
+        hover:border-fuchsia-700"
+        style="width: 280px; height: 150px;">
+       
+        <h2 class="text-md font-semibold text-stone-800">{{ project.name }}</h2>
+        <p class="font-light text-xs text-stone-700">Created by {{ project.owner.username }}</p>
     </div>
 </template>
 
@@ -21,4 +23,6 @@ import { defineProps } from 'vue';
 const props = defineProps({
     project: Object,
 });
+
+// style="width: 1000px; height: 150px;">
 </script>

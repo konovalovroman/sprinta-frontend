@@ -7,14 +7,14 @@
         items-center
         border-solid
         border-b
-        font-light
+        font-normal
         pl-2
         truncate
         border-stone-200
         text-stone-700
-        bg-zinc-100	
+        bg-neutral-50	
         hover:cursor-pointer
-        hover:bg-violet-50"
+        hover:bg-neutral-100"
     >
         {{ sprintName }}
     </li>

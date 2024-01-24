@@ -1,5 +1,5 @@
 <template>
-    <div class="projects-list mt-20">
+    <div class="projects-list">
       <div class="flex flex-wrap justify-start gap-2">
         <router-link v-for="project in projects" :key="project.id" :to="{ name: 'project', params: { id: project.id } }">
           <ProjectListItem :project="project" />
