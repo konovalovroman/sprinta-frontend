@@ -31,8 +31,8 @@ onMounted(async () => {
     await store.dispatch('getSprintsForProject', props.id);
 
     if (Object.keys(project.value).length === 0) {
-        router.push('/notfound');
-        // TODO: why router.push({ name: 'not-found' }) not work
+        router.push('/workspace');
+        // TODO: NotFoundView must be shown
     }
 });
 
