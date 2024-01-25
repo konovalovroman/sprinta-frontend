@@ -1,7 +1,7 @@
 <template>
     <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div class="bg-white p-8 rounded-md w-96">
-        <p class="text-center text-lg font-semibold mb-4">Create new project</p>
+        <p class="text-center text-lg font-semibold mb-4">Edit project name</p>
     <form @submit.prevent="onSubmit">
     <div class="h-5">
         <p class="text-red-500 font-extralight text-xs">{{ errors.name }}</p>
@@ -10,7 +10,7 @@
         type="text"
         id="name"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-4"
-        placeholder="Enter project name"
+        placeholder="Enter new project name"
         required
         v-model="name"
     />
@@ -19,7 +19,7 @@
         class="bg-gray-800 text-white px-4 py-2 rounded-md mb-4"
         type="submit"
     >
-        Create
+        Save
     </button>
 
     <p class="
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
+import { defineEmits, defineProps, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useForm, useField } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
@@ -48,6 +48,10 @@ import * as zod from 'zod';
 const store = useStore();
 
 const emit = defineEmits(['close']);
+
+const props = defineProps({
+    project: Object,
+});
 
 const validationSchema = toTypedSchema(
     zod.object({
@@ -66,12 +70,19 @@ const { handleSubmit, errors } = useForm({ validationSchema });
 const { value: name } = useField('name');
 
 const onSubmit = handleSubmit(async (values) => {
-    const { name } = values;
-    await store.dispatch('createProject', { name });
+    await store.dispatch('updateProject', {
+        id: props.project.id,
+        payload: { name: values.name },
+    });
+
     onClose();
 });
 
 const onClose = () => {
     emit('close');
 };
+
+onMounted(() => {
+    name.value = props.project.name;
+});
 </script>

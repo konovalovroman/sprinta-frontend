@@ -45,6 +45,15 @@ const actions = {
 
         return;
     },
+    async updateProject({ commit }, { id, payload }) {
+        const updateProjectResponse = await projectsAPI.updateProject(id, payload);
+
+        if (updateProjectResponse.status === HttpStatus.OK) {
+            commit('SET_SELECTED_PROJECT', updateProjectResponse.data);
+        }
+
+        return;
+    },
     clearSelectedProject({ commit }) {
         commit('SET_SELECTED_PROJECT', {});
     },

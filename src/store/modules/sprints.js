@@ -23,6 +23,15 @@ const actions = {
 
         return;
     },
+    async createSprint({ commit, state }, payload) {
+        const createSprintResponse = await sprintsAPI.createSprint(payload);
+
+        if (createSprintResponse.status === HttpStatus.CREATED) {
+            commit('SET_SPRINTS', [...state.sprints, createSprintResponse.data]);
+        }
+
+        return;
+    },
     clearSprints({ commit }) {
         commit('SET_SPRINTS', []);
     },

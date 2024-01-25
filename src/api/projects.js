@@ -47,4 +47,21 @@ export default {
             data,
         };
     },
+    async updateProject(id, payload) {
+        const res = await fetch(`${BASE_API_URL}/projects/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getAccessToken()}`,
+            },
+        });
+
+        const data = await res.json();
+        
+        return {
+            status: res.status,
+            data,
+        };
+    },
 };

@@ -10,9 +10,16 @@
         </div>
         <div class="header-links ml-auto">
             <ul class="text-sm lg:flex-grow">
-                <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">Edit name</li>
+                <li
+                    class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10"
+                    @click="openUpdateProjectModal">
+                    Edit name</li>
                 <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">Add member</li>
-                <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">Create sprint</li>
+                <li 
+                    class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10"
+                    @click="openCreateSprintModal">
+                Create sprint
+                </li>
             </ul>
         </div>
         <div class="header-avatar mr-6 hover:cursor-pointer">
@@ -24,7 +31,17 @@
 <script setup>
 import { defineProps } from 'vue';
 
+const emit = defineEmits(['openCreateSprintModal', 'openUpdateProjectModal']);
+
 const props = defineProps({
     project: Object,
 });
+
+const openCreateSprintModal = () => {
+    emit('openCreateSprintModal');
+};
+
+const openUpdateProjectModal = () => {
+    emit('openUpdateProjectModal');
+};
 </script>

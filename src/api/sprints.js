@@ -16,4 +16,21 @@ export default {
             data,
         };
     },
+    async createSprint(payload) {
+        const res = await fetch(`${BASE_API_URL}/sprints`, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+                'Authorization': `Bearer ${getAccessToken()}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await res.json();
+
+        return {
+            status: res.status,
+            data,
+        };
+    },
 };
