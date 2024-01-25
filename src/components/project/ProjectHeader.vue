@@ -11,7 +11,7 @@
         <div class="header-links ml-auto">
             <ul class="text-sm lg:flex-grow">
                 <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">Edit name</li>
-                <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">View members</li>
+                <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">Add member</li>
                 <li class="mt-4 font-light hover:cursor-pointer hover:text-violet-300 inline-block lg:mt-0 text-white mr-10">Create sprint</li>
             </ul>
         </div>

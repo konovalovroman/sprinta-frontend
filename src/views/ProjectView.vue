@@ -1,7 +1,10 @@
 <template>
     <ProjectHeader :project="project"/>
     <div class="project-content flex gap-2 pt-24 p-5 min-h-screen max-h-screen">
-        <SprintsList class="w-2/12" :sprints="sprints"/>
+        <div class="flex w-2/12 flex-col space-y-2">
+            <SprintsList class="flex-1" :sprints="sprints"/>
+            <MembersList class="flex-1" :members="project.members"/>
+        </div>
         <SelectedProjectBoard class="w-10/12"/>
     </div>
 </template>
@@ -13,6 +16,7 @@ import { useStore } from 'vuex';
 import ProjectHeader from '@/components/project/ProjectHeader.vue';
 import SprintsList from '@/components/project/SprintsList.vue';
 import SelectedProjectBoard from '@/components/project/SelectedProjectBoard.vue';
+import MembersList from '@/components/project/MembersList.vue';
 
 const store = useStore();
 const router = useRouter();
