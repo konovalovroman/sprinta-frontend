@@ -1,14 +1,12 @@
 import { createStore } from 'vuex';
+import auth from './modules/auth';
+import projects from './modules/projects';
+import sprints from './modules/sprints';
 
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  },
+    modules: {
+        auth,
+        projects,
+        sprints,
+    },
 });
